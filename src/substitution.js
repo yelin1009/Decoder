@@ -8,12 +8,50 @@ const substitutionModule = (function () {
 
   function substitution(input, alphabet, encode = true) {
     let final = "";
-    let normalAlphabets = "abcdefghijklmnopqrxtuvwxyz";
+    let normalAlphabets = "abcdefghijklmnopqrstuvwxyz";
+    input = input.toLowerCase();
+    // input = input.toLowerCase();
     // your solution code here
-    if (!alphabet || alphabet.length !== 26) {
-      throw false;
-    } else {
-      for (let i = 0; i < input.length; i++) {}
+    console.log(input);
+    console.log(alphabet);
+
+    function is_unique(str) {
+      var obj = {};
+      for (var i = 0; i < str.length; i++) {
+        var char = str[i];
+        if (obj[char]) return false;
+        else obj[char] = true;
+      }
+      return true;
+    }
+
+    try {
+      if (!alphabet || alphabet.length !== 26 || !is_unique(alphabet)) {
+        throw false;
+      } else if (encode) {
+        for (let i = 0; i < input.length; i++) {
+          let index = normalAlphabets.indexOf(input[i]);
+          console.log(index);
+          if (index === -1 && input[i] === " ") {
+            final += " ";
+          } else {
+            final += alphabet[index];
+          }
+        }
+      } else if (!encode) {
+        for (let i = 0; i < input.length; i++) {
+          let index = alphabet.indexOf(input[i]);
+          console.log(index);
+          if (index === -1 && input[i] === " ") {
+            final += " ";
+          } else {
+            final += normalAlphabets[index];
+          }
+        }
+      }
+      return final;
+    } catch (error) {
+      return error;
     }
   }
 
